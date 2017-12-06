@@ -5,10 +5,10 @@ var path = require('path');
 // Connect string to MySQL
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-  host     : '',
-  user     : '',
-  password : '',
-  database : ''
+  host     : 'songapp-db.ck7nst26eyeh.us-west-1.rds.amazonaws.com',
+  user     : 'songapp_guest',
+  password : 'songappguest',
+  database : 'songapp_db'
 });
 
 /* GET home page. */
