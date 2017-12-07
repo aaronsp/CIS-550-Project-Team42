@@ -7,8 +7,8 @@ require('dotenv').load();
 var mysql = require('mysql');
 var connection = mysql.createConnection({
   host     : 'songapp-db.ck7nst26eyeh.us-west-1.rds.amazonaws.com',
-  user     : 'songapp_master',
-  password : 'songapp450',
+  user     : 'songapp_guest',
+  password : 'songappguest',
   database : 'songapp_db'
 });
 /*****I ADDED THIS SHIT************/
