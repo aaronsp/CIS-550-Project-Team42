@@ -22,6 +22,33 @@ app.controller('songController', function($scope, $http) {
         };
 });
 
+app.controller('popularAController', function($scope, $http) {
+        $scope.message="";
+
+        var request = $http.get('/popular/displayArtists');
+        request.success(function(popular) {
+            $scope.popular = popular;
+        });
+        request.error(function(popular){
+            console.log('err');
+        });
+
+});
+
+
+app.controller('popularSController', function($scope, $http) {
+        $scope.message="";
+
+        var request = $http.get('/popular/displaySongs');
+        request.success(function(popularS) {
+            $scope.popularS = popularS;
+        });
+        request.error(function(popularS){
+            console.log('err');
+        });
+
+});
+
 // To implement "Insert a new record", you need to:
 // - Create a new controller here
 // - Create a corresponding route handler in routes/index.js
