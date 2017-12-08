@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
-require('dotenv').load();
 
 // Connect string to MySQL
 var mysql = require('mysql');
@@ -13,9 +12,10 @@ var connection = mysql.createConnection({
 });
 /*****I ADDED THIS SHIT************/
 
-var MongoClient = require('mongodb').MongoClient,
-  f = require('util').format,
-  assert = require('assert'),
+/*
+var MongoClient = require('mongodb').MongoClient;
+  f = require('util').format;
+  assert = require('assert');
   fs = require('fs');
 
   // Read the certificate authority
@@ -38,19 +38,12 @@ MongoClient.connect(url,  {
 
   db.close();
 });
+*/
 /***************/
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.sendFile(path.join(__dirname, '../', 'views', 'index.html'));
-});
-
-
-router.get('/insert', function(req, res, next) {
-  res.sendFile(path.join(__dirname, '../', 'views', 'insert.html'));
-
-router.get('/reference', function(req, res, next) {
-  res.sendFile(path.join(__dirname, '../', 'views', 'reference.html'));
 });
 
 router.get('/popular', function(req, res, next) {
@@ -118,38 +111,7 @@ router.get('/songID/:songID', function(req,res) {
     });
 });
 
-router.get('/data/:login/:name/:sex/:RelationshipStatus/:Birthyear', function(req,res) {
-  var query = 'INSERT INTO Person (login, name, sex, RelationshipStatus, Birthyear) VALUES ';
-  var vals = '("'+ req.params.login + '","' + req.params.name + '","' + req.params.sex + '","'
-  + req.params.RelationshipStatus + '",' + req.params.Birthyear + ')';
-  query = query + vals;
-  console.log(query);
-  connection.query(query, function(err, rows, fields) {
-    if (err) console.log(err);
-    });
-});
-
-/*router.post('/data2in/', function(req, res) {
-    var query = 'INSERT INTO Person (login, name, sex, relationshipStatus, birthyear) VALUES(';
-    alert('hi');
-});
-
-// ----Your implemention of route handler for "Insert a new record" should go here-----
-/*router.post('/insert/:login', function(req, res) {
-    var query = 'INSERT INTO Person (login, name, sex, relationshipStatus, birthyear) VALUES(';
-    var login = req.params.login;
-    var name = 'huh';
-    var sex = 'f';
-    var rel_status = 'Single';
-    var birth_year = '1997'
-    if (login != 'undefined') {
-      query += name + "\', \'" + sex + "\', \'" + rel_status + "\', \'" + birth_year + + "\');";
-      console.log("query= " + query);
-    }
-    connection.query(query, function(err, rows, fields) {
-      if (err) console.log(err);
-      else console.log('added');
-    });
-});*/
 
 module.exports = router;
+
+
