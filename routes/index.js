@@ -10,9 +10,7 @@ var connection = mysql.createConnection({
   password : 'songappguest',
   database : 'songapp_db'
 });
-/*****I ADDED THIS SHIT************/
 
-/*
 var MongoClient = require('mongodb').MongoClient;
   f = require('util').format;
   assert = require('assert');
@@ -38,8 +36,6 @@ MongoClient.connect(url,  {
 
   db.close();
 });
-*/
-/***************/
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

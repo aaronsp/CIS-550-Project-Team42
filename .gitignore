@@ -57,4 +57,7 @@ typings/
 # dotenv environment variables file
 .env
 
+# secret for private keys
+secret/
+
 .DS_Store
