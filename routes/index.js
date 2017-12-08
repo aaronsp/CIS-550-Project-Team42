@@ -98,7 +98,7 @@ router.get('/songID/:songID', function(req,res) {
   // console.log("inside person email");
   //var q2 = ' GROUP BY login'
   // you may change the query during implementation
-  console.log(req.params)
+  console.log(req.params);
   var songID = req.params.songID;
   if (songID != 'undefined') query = 'select * from Song where songID = "' + songID + '";';
   console.log(query);
