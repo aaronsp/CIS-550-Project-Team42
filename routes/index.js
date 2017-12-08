@@ -16,25 +16,38 @@ router.get('/', function(req, res, next) {
   res.sendFile(path.join(__dirname, '../', 'views', 'index.html'));
 });
 
-router.get('/reference', function(req, res, next) {
-  res.sendFile(path.join(__dirname, '../', 'views', 'reference.html'));
-});
-
 router.get('/insert', function(req, res, next) {
   res.sendFile(path.join(__dirname, '../', 'views', 'insert.html'));
 });
 
-router.get('/data/:email', function(req,res) {
+router.get('/data/:song', function(req,res) {
   // use console.log() as print() in case you want to debug, example below:
   // console.log("inside person email");
-  var friends_count_tbl = '(SELECT login, COUNT(login) as num FROM Friends GROUP BY login)'
-  var query = 'SELECT p.*, f.num from Person p LEFT OUTER JOIN ' + friends_count_tbl + ' f on p.login = f.login';
   //var q2 = ' GROUP BY login'
   // you may change the query during implementation
-  var email = req.params.email;
-  if (email != 'undefined') query = query + ' where p.login ="' + email + '"';
-  console.log(q);
-  var q = 'SELECT * FROM artists Limit 4;'
+  console.log(req.params)
+  var song = req.params.song;
+  if (song != 'undefined') query = 'select Song.songID, title, name from Song, artists, PerformedBy where title = "' + song + '" and PerformedBy.songID = Song.songID and PerformedBy.artistID = artists.artistID GROUP BY name;';
+  console.log(query);
+  var q = query;
+  connection.query(q, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+        res.json(rows);
+    }
+    });
+});
+
+router.get('/songID/:songID', function(req,res) {
+  // use console.log() as print() in case you want to debug, example below:
+  // console.log("inside person email");
+  //var q2 = ' GROUP BY login'
+  // you may change the query during implementation
+  console.log(req.params)
+  var songID = req.params.songID;
+  if (songID != 'undefined') query = 'select * from Song where songID = "' + songID + '";';
+  console.log(query);
+  var q = query
   connection.query(q, function(err, rows, fields) {
     if (err) console.log(err);
     else {

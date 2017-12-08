@@ -15,26 +15,32 @@
             <div class="container">
                 <div class="navbar-header"><button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand">HW2 - CIS550</a></div>
                 <div id="navbar" class="collapse navbar-collapse">
-                    <li class="active"><a href="/">Your Work</a></li>
-                    <li><a href="/insert">Insert a new record</a></li>
-                    <li><a href="/reference">Reference</a></li>
+                    <li class="active"><a href="/">Song Recommendation</a></li>
                 </div>
             </div>
         </nav>
          <div class="container">
             <!-- Main component for a primary marketing message or call to action-->
             <div class="jumbotron">
-         <div ng-controller="myController">
-        <p><span aria-hidden="true" class="glyphicon text-primary glyphicon-search"></span> Please enter a person login:
-            <input name="email" ng-model="email" value="">
-            <button type="button" ng-click="Submit()" class="button">Show Persons</button>
+         <div ng-controller="songController">
+        <p><span aria-hidden="true" class="glyphicon text-primary glyphicon-search"></span> Please enter a song you like:
+            <input name="song" ng-model="song" value="">
+            <button type="button" ng-click="Submit()" class="button">Enter</button>
         </p>
         <table border="0" cellpadding="10" cellspacing="1" width="500" align="center">
             <tr>
-            <td> Artist </td>
-            <tr ng-repeat="x in data">
-            <td> {{x.name}} </td>
-            </tr>
+                {{songData}}
+                <tr ng-repeat="s in songData">
+                <td>
+                    {{s.title}}
+                </td>
+                </tr>
+                <td> <b>By which artist?</b> </td>
+                <tr ng-repeat="x in data">
+                <td>
+                    <button type="button" ng-click="SubmitSongID(x.songID)" class="button">{{x.name}}</button>
+                </td>
+                </tr>
         </table>
         </div>
     </body>

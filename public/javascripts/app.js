@@ -1,16 +1,25 @@
 var app = angular.module('angularjsNodejsTutorial',[]);
-app.controller('myController', function($scope, $http) {
+
+app.controller('songController', function($scope, $http) {
         $scope.message="";
         $scope.Submit = function() {
-        var request = $http.get('/data/'+$scope.email);
-        request.success(function(data) {
-            $scope.data = data;
-        });
-        request.error(function(data){
-            console.log('err');
-        });
-
-    };
+            var request = $http.get('/data/'+$scope.song);
+            request.success(function(data) {
+                $scope.data = data;
+            });
+            request.error(function(data){
+                console.log('err');
+            });
+        };
+        $scope.SubmitSongID = function(songID) {
+            var requestSongID = $http.get('/songID/'+ songID);
+            requestSongID.success(function(songData) {
+                $scope.songData = songData;
+            });
+            requestSongID.error(function(songData){
+                console.log('err');
+            });
+        };
 });
 
 // To implement "Insert a new record", you need to:
