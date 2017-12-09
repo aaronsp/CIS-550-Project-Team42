@@ -21,7 +21,7 @@ var MongoClient = require('mongodb').MongoClient;
   var cert = fs.readFileSync(__dirname + "/cis450.pem");
 
 // Connection URL mongodb://{hostname}:{port}/{dbname}
-var url = 'mongodb://ec2-user@ec2-54-173-244-199.compute-1.amazonaws.com/songapp_db';
+var url = 'mongodb://ec2-user@ec2-54-204-154-196.compute-1.amazonaws.com:27017/local';
 
 // Use connect method to connect to the Server passing in
 // additional options
@@ -109,5 +109,3 @@ router.get('/songID/:songID', function(req,res) {
 
 
 module.exports = router;
-
-
