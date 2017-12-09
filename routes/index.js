@@ -18,7 +18,7 @@ var MongoClient = require('mongodb').MongoClient;
 
   // Read the certificate authority
   //var ca = [fs.readFileSync(__dirname + "/ca.pem")];
-  var cert = fs.readFileSync(__dirname + "/cis450.pem");
+  var cert = fs.readFileSync(__dirname + "/../secret/cis450.pem");
 
 // Connection URL mongodb://{hostname}:{port}/{dbname}
 var url = 'mongodb://ec2-user@ec2-54-173-244-199.compute-1.amazonaws.com/songapp_db';
@@ -96,7 +96,23 @@ router.get('/songID/:songID', function(req,res) {
   // you may change the query during implementation
   console.log(req.params);
   var songID = req.params.songID;
-  if (songID != 'undefined') query = 'select * from Song where songID = "' + songID + '";';
+  query = "SELECT T.title, artists.name, T.num " +
+           "FROM ( " +
+                    "SELECT Song.title, Song.songID, COUNT(ListensTo.userID) as num " +
+                    "FROM Song " +
+                    "JOIN ListensTo " +
+                    "ON Song.songID = ListensTo.songID " +
+                    "WHERE ListensTo.userID IN ( SELECT ListensTo.userID " +
+                                                "FROM ListensTo " +
+                                                "WHERE songID = '" + songID + "' ) " +
+                    "GROUP BY Song.songID " +
+                    "ORDER BY COUNT(ListensTo.userID) DESC " +
+                    "LIMIT 21 OFFSET 1 " +
+                  ") T " +
+            "JOIN PerformedBy " +
+            "ON T.songID = PerformedBy.songID " +
+            "JOIN artists " +
+            "ON PerformedBy.artistID = artists.artistID;";
   console.log(query);
   var q = query
   connection.query(q, function(err, rows, fields) {
