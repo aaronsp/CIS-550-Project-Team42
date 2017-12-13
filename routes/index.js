@@ -49,7 +49,7 @@ router.get('/popular', function(req, res, next) {
 router.get('/popular/displaySongs', function(req, res, next) {
 
 
-  var q = 'SELECT Song.title, COUNT(ListensTo.userId) FROM Song JOIN ListensTo ON Song.songID = ListensTo.songID GROUP BY Song.title ORDER BY COUNT(ListensTo.userId) DESC LIMIT 20;'
+  var q = 'SELECT Song.title, artists.name, COUNT(ListensTo.userId) FROM Song JOIN ListensTo ON Song.songID = ListensTo.songID JOIN PerformedBy ON Song.songID = PerformedBy.songID JOIN artists ON PerformedBy.artistID = artists.artistID GROUP BY Song.title ORDER BY COUNT(ListensTo.userId) DESC LIMIT 20;'
   connection.query(q, function(err, rows, fields) {
     if (err) console.log(err);
     else {
@@ -60,12 +60,26 @@ router.get('/popular/displaySongs', function(req, res, next) {
 
 router.get('/popular/displayArtists', function(req, res, next) {
 
-
-  var q = 'SELECT artists.name, COUNT(ListensTo.userID) as count FROM artists JOIN PerformedBy ON artists.artistID = PerformedBy.ArtistID JOIN ListensTo ON PerformedBy.songID = ListensTo.songID GROUP BY artists.name ORDER BY COUNT(ListensTo.UserId) DESC LIMIT 20;'
+  var q = 'SELECT artists.name, artists.artistID, COUNT(ListensTo.userID) as count FROM artists JOIN PerformedBy ON artists.artistID = PerformedBy.ArtistID JOIN ListensTo ON PerformedBy.songID = ListensTo.songID GROUP BY artists.name ORDER BY COUNT(ListensTo.UserId) DESC LIMIT 20;'
   connection.query(q, function(err, rows, fields) {
     if (err) console.log(err);
     else {
         res.json(rows);
+    }
+  });
+
+});
+
+router.get('/songsByArtist/:artistID', function(req, res, next) {
+
+  var q = 'SELECT Song.title, Song.songID FROM Song JOIN PerformedBy ON Song.songID = PerformedBy.songID JOIN artists ON PerformedBy.artistID = artists.artistID WHERE artists.artistID = \'' + artistID + "\';";
+  connection.query(q, function(err, rows, fields) {
+    if (err) {
+        console.log(err);
+    }
+    else {
+        console.log(rows);
+        res.render( 'songs.html', {songs:rows})
     }
   });
 
@@ -89,6 +103,10 @@ router.get('/data/:song', function(req,res) {
     });
 });
 
+router.get('/similarSongsUser/:songID', function(req, res ) {
+    console.log(req.params);
+    res.render('index.html', {});
+})
 router.get('/songID/:songID', function(req,res) {
   // use console.log() as print() in case you want to debug, example below:
   // console.log("inside person email");
@@ -118,7 +136,7 @@ router.get('/songID/:songID', function(req,res) {
   connection.query(q, function(err, rows, fields) {
     if (err) console.log(err);
     else {
-        //console.log(rows)
+        console.log(rows.length);
         res.json(rows);
     }
     });

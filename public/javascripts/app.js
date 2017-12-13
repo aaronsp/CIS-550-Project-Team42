@@ -1,7 +1,7 @@
 var app = angular.module('angularjsNodejsTutorial',[]);
 
 app.controller('songController', function($scope, $http) {
-        $scope.message="";
+        $scope.message="Hello";
         $scope.Submit = function() {
             var request = $http.get('/data/'+$scope.song);
             request.success(function(data) {
@@ -17,10 +17,14 @@ app.controller('songController', function($scope, $http) {
             var requestSongID = $http.get('/songID/'+ songID);
             requestSongID.success(function(songData) {
                 console.log(songData);
+                if (songData.length > 0){
+                    $scope.prompt = "Songs similar to: " + song_name + " by " + artist_name;
+                } else {
+                    $scope.prompt = "No songs found similar to " + song_name + " by " + artist_name;
+                }
                 $scope.songData = songData;
                 $scope.song = song_name;
                 $scope.data = '';
-                $scope.prompt = "Songs similar to: " + song_name + " by " + artist_name;
             });
             requestSongID.error(function(songData){
                 console.log('err');
@@ -39,6 +43,11 @@ app.controller('popularAController', function($scope, $http) {
             console.log('err');
         });
 
+        $scope.SongsByArtist = function(artistName, artistID) {
+            var requestSongsByArtist = $http.get('/songsByArtist/' + artistID);
+
+        };
+
 });
 
 
@@ -52,6 +61,23 @@ app.controller('popularSController', function($scope, $http) {
         request.error(function(popularS){
             console.log('err');
         });
+        $scope.SubmitSongID = function(songID, artist_name, song_name) {
+            var requestSongID = $http.get('/similarSongsUser/'+ songID);
+            requestSongID.success(function(songData) {
+                console.log(songData);
+                if (songData.length > 0){
+                    $scope.prompt = "Songs similar to: " + song_name + " by " + artist_name;
+                } else {
+                    $scope.prompt = "No songs found similar to " + song_name + " by " + artist_name;
+                }
+                $scope.songData = songData;
+                $scope.song = song_name;
+                $scope.data = '';
+            });
+            requestSongID.error(function(songData){
+                console.log('err');
+            });
+        };
 
 });
 

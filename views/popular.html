@@ -24,23 +24,77 @@
             <!-- Main component for a primary marketing message or call to action-->
             <div class="jumbotron">
          <div ng-controller="popularAController">
-        <table border="0" cellpadding="10" cellspacing="1" width="500" align="center">
-            <tr>
-            <td> Most Popular Artists </td>
-            <tr ng-repeat="x in popular">
-            <td> {{x.name}} </td>
-            </tr>
-            <td> ~~~~~~~~~~~~~~</td>
-        </table>
+             <b>Most Popular Artists:</b>
+
+             <table class="table" >
+                <thead>
+                    <tr>
+                        <th>Artist</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="x in popular">
+                        <td>
+                            {{x.name}}
+                        </td>
+                        <td>
+                            <button type="button" ng-click="SongsByArtist(x.name, x.artistID)" class="button">Songs by {{x.name}}</button>
+                        </td>
+                        <td>
+                            <ul class="nav nav-pills">
+                              <li><a href="/">Find similar songs</a></li>
+                            </ul>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+             <table class="table" >
+                <thead>
+                    <tr>
+                        <th>Artist</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="x in songs_r">
+                        <td>
+                            {{x.title}}
+                        </td>
+                        <td>
+                            {{x.name}}
+                        </td>
+                        <td>
+                            <button type="button" ng-click="SongsByArtist(x.name, x.artistID)" class="button">Find similar songs</button>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+
         <div ng-controller="popularSController">
-       <table border="0" cellpadding="10" cellspacing="1" width="500" align="center">
-           <tr>
-           <td> Most Popular Songs </td>
-           <tr ng-repeat="x in popularS">
-           <td> {{x.title}} </td>
-           </tr>
-       </table>
+            <b>Most Popular Songs:</b>
+            <table class="table" >
+                <thead>
+                    <tr>
+                        <th>Song</th>
+                        <th>Artist</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="x in popularS">
+                        <td>
+                            {{x.title}}
+                        </td>
+                        <td>
+                            {{x.name}}
+                        </td>
+                        <td>
+                            <button type="button" ng-click="SubmitSongID(s.songID, s.name, s.title)" class="button">Find similar songs</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
        </div>
     </body>
 </html>
