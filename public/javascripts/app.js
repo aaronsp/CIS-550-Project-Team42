@@ -13,8 +13,9 @@ app.controller('songController', function($scope, $http) {
                 console.log('err');
             });
         };
-        $scope.SubmitSongID = function(songID, artist_name, song_name) {
-            var requestSongID = $http.get('/songID/'+ songID);
+        $scope.SubmitSongID = function(songID, artist_name, song_name, rec) {
+            console.log($scope.rec)
+            var requestSongID = $http.get('/songID/'+ songID + '/' + rec);
             requestSongID.success(function(songData) {
                 console.log(songData);
                 if (songData.length > 0){
