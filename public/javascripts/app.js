@@ -6,15 +6,21 @@ app.controller('songController', function($scope, $http) {
             var request = $http.get('/data/'+$scope.song);
             request.success(function(data) {
                 $scope.data = data;
+                $scope.songData = '';
+                $scope.prompt = 'Artist?';
             });
             request.error(function(data){
                 console.log('err');
             });
         };
-        $scope.SubmitSongID = function(songID) {
+        $scope.SubmitSongID = function(songID, artist_name, song_name) {
             var requestSongID = $http.get('/songID/'+ songID);
             requestSongID.success(function(songData) {
+                console.log(songData);
                 $scope.songData = songData;
+                $scope.song = song_name;
+                $scope.data = '';
+                $scope.prompt = "Songs similar to: " + song_name + " by " + artist_name;
             });
             requestSongID.error(function(songData){
                 console.log('err');

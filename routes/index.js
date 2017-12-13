@@ -96,7 +96,7 @@ router.get('/songID/:songID', function(req,res) {
   // you may change the query during implementation
   console.log(req.params);
   var songID = req.params.songID;
-  query = "SELECT T.title, artists.name, T.num " +
+  query = "SELECT T.title, artists.name, T.num, T.songID " +
            "FROM ( " +
                     "SELECT Song.title, Song.songID, COUNT(ListensTo.userID) as num " +
                     "FROM Song " +
