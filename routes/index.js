@@ -25,10 +25,8 @@ var db;
 // Use connect method to connect to the Server passing in
 // additional options
 MongoClient.connect(url,  {
-  server: {
-    sslValidate:true
-    , sslCert:cert
-  }
+  sslValidate:true,
+  sslCert:cert
 }, function(err, database) {
   assert.equal(null, err);
   console.log("Connected correctly to server");
@@ -165,13 +163,12 @@ router.get('/songID/:songID/:rec', function(req,res) {
   } else {
     db.collection("cynthia").find({"track_id": songID}, {"_id":0, "similars":1}, function(err, cursor) {
       if (err) {
-        console.log("errror ya bish")
         console.log(err.status);
         console.log(err.message);
       } else {
         doc = cursor.next();
         doc.then(function(result) {
-          result = result.similars
+          result = result.similars;
           console.log(result);
           q = "SELECT S.title, A.name, S.songID FROM Song S JOIN PerformedBy P on S.songID = P.songID JOIN artists A on P.artistID = A.artistID";
           for (i = 0; i < 10 && i < result.length; i++) {
