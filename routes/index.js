@@ -59,6 +59,17 @@ router.get('/popular/displaySongs', function(req, res, next) {
   });
 });
 
+router.get('/both/:song/:artist', function(req, res, next) {
+  console.log(song, artist);
+  query = 'select Song.songID, title, name from Song, artists, PerformedBy where title = "' + song + '" and name = "' + artist + '" and PerformedBy.songID = Song.songID and PerformedBy.artistID = artists.artistID GROUP BY title;';
+  connection.query(q, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      res.json(rows);
+    }
+  });
+});
+
 router.get('/popular/displayArtists', function(req, res, next) {
 
   var q = 'SELECT artists.name, artists.artistID, COUNT(ListensTo.userID) as count FROM artists JOIN PerformedBy ON artists.artistID = PerformedBy.ArtistID JOIN ListensTo ON PerformedBy.songID = ListensTo.songID GROUP BY artists.name ORDER BY COUNT(ListensTo.UserId) DESC LIMIT 20;'
@@ -109,7 +120,26 @@ router.get('/data/:song', function(req,res) {
   // you may change the query during implementation
   console.log(req.params)
   var song = req.params.song;
+  console.log(song);
   if (song != 'undefined') query = 'select Song.songID, title, name from Song, artists, PerformedBy where title = "' + song + '" and PerformedBy.songID = Song.songID and PerformedBy.artistID = artists.artistID GROUP BY name;';
+  console.log(query);
+  var q = query;
+  connection.query(q, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      res.json(rows);
+    }
+  });
+});
+
+router.get('/artistSearch/:artist', function(req,res) {
+  // use console.log() as print() in case you want to debug, example below:
+  // console.log("inside person email");
+  //var q2 = ' GROUP BY login'
+  // you may change the query during implementation
+  console.log(req.params);
+  var artist = req.params.artist;
+  if (artist != 'undefined') query = 'select Song.songID, title, name from Song, artists, PerformedBy where name = "' + artist + '" and PerformedBy.songID = Song.songID and PerformedBy.artistID = artists.artistID GROUP BY title;';
   console.log(query);
   var q = query;
   connection.query(q, function(err, rows, fields) {

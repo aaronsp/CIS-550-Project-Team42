@@ -3,11 +3,28 @@ var app = angular.module('angularjsNodejsTutorial',[]);
 app.controller('songController', function($scope, $http) {
         $scope.message="Hello";
         $scope.Submit = function() {
-            var request = $http.get('/data/'+$scope.song);
+            var song = $scope.song;
+            var artist = $scope.artist;
+            if (artist == null || artist === '') {
+              var request = $http.get('/data/'+ song);
+              var prompt = 'Artist?';
+            }
+            else if (song == null || song === '') {
+              var request = $http.get('/artistSearch/'+ artist);
+              var prompt = 'Song?';
+            }
+            else {
+              var request = $http.get('/both/'+ song + "/" + artist);
+              var prompt = 'Find similar songs?'
+            }
             request.success(function(data) {
                 $scope.data = data;
                 $scope.songData = '';
-                $scope.prompt = 'Artist?';
+                if (data.length > 0 ) {
+                  $scope.prompt = prompt;
+                } else {
+                  $scope.prompt = "Search found no results.";
+                }
             });
             request.error(function(data){
                 console.log('err');
