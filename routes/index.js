@@ -18,10 +18,10 @@ fs = require('fs');
 
 // Read the certificate authority
 //var ca = [fs.readFileSync(__dirname + "/ca.pem")];
-var cert = fs.readFileSync(__dirname + "/../secret/cis450.pem");
+var cert = fs.readFileSync(__dirname + "/secret/cis450.pem");
 
 // Connection URL mongodb://{hostname}:{port}/{dbname}
-var url = 'mongodb://admin:songapp450@ec2-54-89-103-7.compute-1.amazonaws.com:27017/songapp_db?authSource=admin';
+var url = 'mongodb://admin:songapp450@ec2-54-85-120-205.compute-1.amazonaws.com:27017/songapp_db?authSource=admin';
 var db;
 // Use connect method to connect to the Server passing in
 // additional options
