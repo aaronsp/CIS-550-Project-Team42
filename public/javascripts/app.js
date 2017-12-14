@@ -41,6 +41,7 @@ app.controller('songController', function($scope, $http) {
                 }
                 $scope.songData = songData;
                 $scope.song = song_name;
+                $scope.artist = artist_name;
                 $scope.data = '';
             });
             requestSongID.error(function(songData){
