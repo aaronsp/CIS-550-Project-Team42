@@ -18,7 +18,7 @@ fs = require('fs');
 
 // Read the certificate authority
 //var ca = [fs.readFileSync(__dirname + "/ca.pem")];
-var cert = fs.readFileSync(__dirname + "/secret/cis450.pem");
+var cert = fs.readFileSync(__dirname + "/../secret/cis450.pem");
 
 // Connection URL mongodb://{hostname}:{port}/{dbname}
 
@@ -27,10 +27,8 @@ var db;
 // Use connect method to connect to the Server passing in
 // additional options
 MongoClient.connect(url,  {
-  server: {
-    sslValidate:true
-    , sslCert:cert
-  }
+  sslValidate:true,
+  sslCert:cert
 }, function(err, database) {
   assert.equal(null, err);
   console.log("Connected correctly to server");
