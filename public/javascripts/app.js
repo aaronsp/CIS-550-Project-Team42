@@ -61,8 +61,8 @@ app.controller('popularAController', function($scope, $http) {
             console.log('err');
         });
 
-        $scope.SongsByArtist = function(artistName, artistID) {
-            var requestSongsByArtist = $http.get('/songsByArtist/' + artistID);
+        $scope.SongsByArtist = function(artistName) {
+            var requestSongsByArtist = $http.get('/songsByArtist/' + artistName);
 
         };
 

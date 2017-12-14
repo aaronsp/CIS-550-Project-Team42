@@ -87,19 +87,12 @@ router.get('/popular/displayTag', function(req, res, next) {
 
 });
 
-router.get('/songsByArtist/:artistID', function(req, res, next) {
-
-  var q = 'SELECT Song.title, Song.songID FROM Song JOIN PerformedBy ON Song.songID = PerformedBy.songID JOIN artists ON PerformedBy.artistID = artists.artistID WHERE artists.artistID = \'' + artistID + "\';";
-  connection.query(q, function(err, rows, fields) {
-    if (err) {
-      console.log(err);
-    }
-    else {
-      console.log(rows);
-      res.render( 'songs.html', {songs:rows})
-    }
-  });
-
+router.get('/songsByArtist/:artistName', function(req, res, next) {
+  artistName = req.params.artistName;
+  console.log(req.params);
+  console.log(artistName);
+  res.render('index', {artist:artistName});
+  next();
 });
 
 router.get('/both/:song/:artist', function(req, res, next) {
