@@ -26,14 +26,19 @@
             <div class="jumbotron">
          <div ng-controller="songController">
         <p><span aria-hidden="true" class="glyphicon text-primary glyphicon-search"></span> Please enter a song you like:
-            <input name="song" ng-model="song" value="">
-            <button type="button" ng-click="Submit()" class="button">Enter</button>
+            <input name="song" ng-model="song" value='' >
         </p>
+       <p><span aria-hidden="true" class="glyphicon text-primary glyphicon-search"></span> Please enter the artist's name:
+           <input name="artist" ng-model="artist" value=''>
+       </p>
+       <p>
+           <button type="button" ng-click="Submit()" class="button">Search</button>
+       </p>
              {{prompt}}
              <table border="0" cellpadding="10" cellspacing="1" width="500" align="center">
                 <tr ng-repeat="x in data">
                 <td>
-                    <button type="button" ng-click="SubmitSongID(x.songID, x.name, x.title, 1)" class="button">{{x.name}}</button>
+                    <button type="button" ng-click="SubmitSongID(x.songID, x.name, x.title, 1)" class="button">{{x.title}} by {{x.name}}</button>
                 </td>
                 </tr>
         </table>
