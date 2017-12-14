@@ -21,7 +21,7 @@ fs = require('fs');
 var cert = fs.readFileSync(__dirname + "/../secret/cis450.pem");
 
 // Connection URL mongodb://{hostname}:{port}/{dbname}
-var url = 'mongodb://admin:songapp450@ec2-52-54-193-171.compute-1.amazonaws.com:27017/songapp_db?authSource=admin';
+var url = 'mongodb://admin:songapp450@ec2-54-88-217-160.compute-1.amazonaws.com:27017/songapp_db?authSource=admin';
 var db;
 // Use connect method to connect to the Server passing in
 // additional options
@@ -69,6 +69,22 @@ router.get('/popular/displayArtists', function(req, res, next) {
     if (err) console.log(err);
     else {
       res.json(rows);
+    }
+  });
+
+});
+
+router.get('/popular/displayTag', function(req, res, next) {
+
+  db.collection("tag_count").find(function(err, cursor) {
+    if (err) console.log(err)
+    else {
+      cursor.sort({"value": -1});
+      cursor.limit(10);
+      var arr = cursor.toArray();
+      arr.then(function(results) {
+        res.json(results);
+      });
     }
   });
 

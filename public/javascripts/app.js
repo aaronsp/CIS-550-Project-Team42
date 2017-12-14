@@ -51,6 +51,19 @@ app.controller('popularAController', function($scope, $http) {
 
 });
 
+app.controller('popularTController', function($scope, $http) {
+        $scope.message="";
+
+        var request = $http.get('/popular/displayTag');
+        request.success(function(popularT) {
+            $scope.popularT = popularT;
+        });
+        request.error(function(popularT){
+            console.log('err');
+        });
+
+});
+
 
 app.controller('popularSController', function($scope, $http) {
         $scope.message="";
@@ -81,6 +94,7 @@ app.controller('popularSController', function($scope, $http) {
         };
 
 });
+
 
 // To implement "Insert a new record", you need to:
 // - Create a new controller here

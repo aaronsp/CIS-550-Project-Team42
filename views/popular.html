@@ -97,5 +97,17 @@
                 </tbody>
             </table>
        </div>
+       <div ng-controller="popularTController">
+           <b>Most Popular Tags:</b>
+           <table class="table" >
+               <tbody>
+                   <tr ng-repeat="x in popularT">
+                       <td>
+                           {{x._id}}
+                       </td>
+                   </tr>
+               </tbody>
+           </table>
+      </div>
     </body>
 </html>
