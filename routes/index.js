@@ -21,7 +21,11 @@ fs = require('fs');
 var cert = fs.readFileSync(__dirname + "/../secret/cis450.pem");
 
 // Connection URL mongodb://{hostname}:{port}/{dbname}
-var url = 'mongodb://admin:songapp450@ec2-54-88-217-160.compute-1.amazonaws.com:27017/songapp_db?authSource=admin';
+
+
+
+
+var url = 'mongodb://admin:songapp450@ec2-54-85-120-205.compute-1.amazonaws.com:27017/songapp_db?authSource=admin';
 var db;
 // Use connect method to connect to the Server passing in
 // additional options
@@ -166,13 +170,12 @@ router.get('/songID/:songID/:rec', function(req,res) {
   } else {
     db.collection("cynthia").find({"track_id": songID}, {"_id":0, "similars":1}, function(err, cursor) {
       if (err) {
-        console.log("errror ya bish")
         console.log(err.status);
         console.log(err.message);
       } else {
         doc = cursor.next();
         doc.then(function(result) {
-          result = result.similars
+          result = result.similars;
           console.log(result);
           q = "SELECT S.title, A.name, S.songID FROM Song S JOIN PerformedBy P on S.songID = P.songID JOIN artists A on P.artistID = A.artistID";
           for (i = 0; i < 10 && i < result.length; i++) {
@@ -182,7 +185,7 @@ router.get('/songID/:songID/:rec', function(req,res) {
               q = q + " OR S.songID = '" + result[i][0] + "'";
             }
           }
-          q = q + ";";
+          q = q + " GROUP BY S.title;";
           console.log(q);
           connection.query(q, function(err, rows, fields) {
             if (err) console.log(err);
