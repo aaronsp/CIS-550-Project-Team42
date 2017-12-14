@@ -182,7 +182,7 @@ router.get('/songID/:songID/:rec', function(req,res) {
               q = q + " OR S.songID = '" + result[i][0] + "'";
             }
           }
-          q = q + ";";
+          q = q + "GROUP BY S.title;";
           console.log(q);
           connection.query(q, function(err, rows, fields) {
             if (err) console.log(err);
