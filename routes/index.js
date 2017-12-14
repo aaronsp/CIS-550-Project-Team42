@@ -59,17 +59,6 @@ router.get('/popular/displaySongs', function(req, res, next) {
   });
 });
 
-router.get('/both/:song/:artist', function(req, res, next) {
-  console.log(song, artist);
-  query = 'select Song.songID, title, name from Song, artists, PerformedBy where title = "' + song + '" and name = "' + artist + '" and PerformedBy.songID = Song.songID and PerformedBy.artistID = artists.artistID GROUP BY title;';
-  connection.query(q, function(err, rows, fields) {
-    if (err) console.log(err);
-    else {
-      res.json(rows);
-    }
-  });
-});
-
 router.get('/popular/displayArtists', function(req, res, next) {
 
   var q = 'SELECT artists.name, artists.artistID, COUNT(ListensTo.userID) as count FROM artists JOIN PerformedBy ON artists.artistID = PerformedBy.ArtistID JOIN ListensTo ON PerformedBy.songID = ListensTo.songID GROUP BY artists.name ORDER BY COUNT(ListensTo.UserId) DESC LIMIT 20;'
@@ -85,7 +74,7 @@ router.get('/popular/displayArtists', function(req, res, next) {
 router.get('/popular/displayTag', function(req, res, next) {
 
   db.collection("tag_count").find(function(err, cursor) {
-    if (err) console.log(err)
+    if (err) console.log(err);
     else {
       cursor.sort({"value": -1});
       cursor.limit(10);
@@ -111,6 +100,20 @@ router.get('/songsByArtist/:artistID', function(req, res, next) {
     }
   });
 
+});
+
+router.get('/both/:song/:artist', function(req, res, next) {
+  console.log(req.params);
+  var song = req.params.song;
+  var artist = req.params.artist;
+  var q = 'select Song.songID, title, name from Song, artists, PerformedBy where title = "' + song + '" and name = "' + artist + '" and PerformedBy.songID = Song.songID and PerformedBy.artistID = artists.artistID GROUP BY title;';
+  console.log(q);
+  connection.query(q, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      res.json(rows);
+    }
+  });
 });
 
 router.get('/data/:song', function(req,res) {
